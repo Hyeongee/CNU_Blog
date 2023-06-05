@@ -5,10 +5,11 @@ import Layout from './pages/Layout';
 import Post from './pages/Post';
 import Resume from './pages/Resume';
 import Header from './components/Header';
+import Write from './pages/Write';
 
 function App() {
   return (
-    <Router>
+    <Router basename={import.meta.env.DEV ? '/' : '/CNU_Blog/'}>
       <Routes>
         <Route element={<Header />}>
           <Route element={<Layout />}>
@@ -17,7 +18,7 @@ function App() {
           </Route>
           <Route path="/post/:postId" element={<Post />} />
         </Route>
-        {/*todo (5-1) Write 추가*/}
+        <Route path="/write" element={<Write />} />
       </Routes>
     </Router>
   );

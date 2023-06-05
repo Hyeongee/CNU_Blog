@@ -1,38 +1,25 @@
-import { TAG } from '../api/types';
 import PostListItem from '../components/PostListItem';
-
-const list = [
-  {
-    post: {
-      id: 1,
-      title: '1번 게시글',
-      contents: '내용',
-      tag: TAG.REACT,
-    },
-  },
-  {
-    post: {
-      id: 2,
-      title: '2번 게시글',
-      contents: '내용',
-      tag: TAG.REACT,
-    },
-  },
-  {
-    post: {
-      id: 3,
-      title: '3번 게시글',
-      contents: '내용',
-      tag: TAG.REACT,
-    },
-  },
-];
+import { useEffect, useState } from 'react';
+import { IResponsePostList } from '../api/types';
+import NoPostList from '../components/NoPostList';
+import { getPostList } from '../api';
 
 const Home = () => {
+  const [postList, setPostList] = useState<IResponsePostList>([]);
+  const fetchPostList = async () => {
+    const { data } = await getPostList();
+    setPostList(data);
+  };
+  useEffect(() => {
+    fetchPostList();
+  }, []);
+  if (postList.length === 0) {
+    return <NoPostList />;
+  }
   return (
     <div>
-      {list.map(item => (
-        <PostListItem key={item.post.id} {...item.post} />
+      {postList.map(({ post }, index) => (
+        <PostListItem key={index} id={post.id} title={post.title} contents={post.contents} tag={post.tag} />
       ))}
     </div>
   );
