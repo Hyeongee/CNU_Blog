@@ -1,8 +1,5 @@
-import { useEffect, useState } from 'react';
-import { getPostList } from '../api';
+import { TAG } from '../api/types';
 import PostListItem from '../components/PostListItem';
-import { IResponsePostList, TAG } from '../api/types';
-import NoPostList from '../components/NoPostList';
 
 const list = [
   {
@@ -32,7 +29,13 @@ const list = [
 ];
 
 const Home = () => {
-  return <div>{/*todo (3-1) post 목록 작성*/}</div>;
+  return (
+    <div>
+      {list.map(item => (
+        <PostListItem key={item.post.id} {...item.post} />
+      ))}
+    </div>
+  );
 };
 
 export default Home;
